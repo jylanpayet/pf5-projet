@@ -1,0 +1,25 @@
+Étudiant :
+    PAYET Jylan, n°71803302
+    ALEXANDRE Dylan, n°21967791
+
+    (*) Rapport de premier Rendu 15/12/2021 (*)
+
+Les fonctions read_polish, print_polish et eval_polish on été implémentée pour ce premier rendu. 
+Utiliser "make" puis "./run" pour avoir accès aux différents usages : -reprint et -eval.
+
+Le fichier lecture.ml contient toutes les fonctions relatives à read_polish :
+    - Divers fonctions de conditions à respecter pour que le fichier polish soit valide. 
+    - La fonction lecture ouvre le fichier et copie les lignes du fichier une par une en les traitant grâce à la fonction copy_lines.
+    - Contient les fonctions parse de chaque type important et un parse communs "parse_to_program" qui renvoie le fichier en donné Ocaml.
+
+Le fichier affichage.ml contient toutes les fonctions relatives à print_polish :
+    - Contient le print de chaque type.
+    - Une fonction de print complète : print_block qui va afficher un block entier en utilisant les fonctions du point précèdent.
+
+Le fichier evaluation.ml contient toutes les fonctions relatives à eval_polish :
+    - Contient les fonctions d'évaluation d'expression et de conditions.
+    - La fonction eval_block qui évalue un block entier en utilisant les fonctions du point précèdent.
+
+Le fichier include.ml contient tous les types utilisés.
+
+polish.ml contient le main et toutes les grandes fonctions.

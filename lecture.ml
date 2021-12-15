@@ -122,8 +122,7 @@ let parse_to_program (list:list_de_lignes) : program =
                                (x,If(parse_cond z,parse_instr a,parse_instr c))::parse_instr(d)
                                else (x,If(parse_cond z,parse_instr a,[]))::parse_instr(b)
                 end
-      | "WHILE" -> let a,b = parse_block [] r y 
-          in (x,While(parse_cond z,parse_instr a))::parse_instr(b)
+      | "WHILE" -> let a,b = parse_block [] r y in (x,While(parse_cond z,parse_instr a))::parse_instr(b)
       | _ -> (x,parse_set z)::parse_instr(r)
   in parse_instr list
 
