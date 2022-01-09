@@ -1,6 +1,6 @@
 Étudiant :
-    PAYET Jylan, n°71803302
-    ALEXANDRE Dylan, n°21967791
+PAYET Jylan, n°71803302
+ALEXANDRE Dylan, n°21967791
 
     (*) Rapport de premier Rendu 15/12/2021 (*)
 
@@ -16,10 +16,38 @@ Le fichier affichage.ml contient toutes les fonctions relatives à print_polish 
     - Contient le print de chaque type.
     - Une fonction de print complète : print_block qui va afficher un block entier en utilisant les fonctions du point précèdent.
 
+    (*) Rapport de premier Rendu 10/01/2022 (*)
+
+Les fonctions vars_polish, simpl_polish et sign_polish on été implémentée pour ce deuxième rendu. 
+Utiliser "make" puis "./run" pour avoir accès aux différents usages : -simpl et -vars, sign est pas encore disponible.
+
 Le fichier evaluation.ml contient toutes les fonctions relatives à eval_polish :
     - Contient les fonctions d'évaluation d'expression et de conditions.
     - La fonction eval_block qui évalue un block entier en utilisant les fonctions du point précèdent.
 
+Le fichier simplification.ml contient toutes les fonctions relatives à simpl : 
+    - Contient les fonctions de simplification de tout type pouvant être simplifié (expression, conditions... ).
+    - La fonction simpl_program va effectuer toutes les simplifications possibles sur le programme en question.
+
+Le fichier vars.ml contient toutes les fonctions relatives à vars : 
+    - Contient les fonctions d'évaluation sur un environnement, on utilise ici des Set.
+    - La fonction vars_program va effectuer une évaluation complète du programme afin de déterminer toutes les erreurs possibles dues à une mauvaise initialisation.
+
+Le fichier sign.ml contient toutes les fonctions relatives à sign :
+    - D'autres fonctions utilitaires.
+    - Fonction qui évalue le sign d'une expression et renvoie une liste de tous les signes possibles de celle-ci.
+    - TODO : il faut finir l'evaluation des signes de conditions puis faire la propagation des signes puis enfin finir if et while.
+
 Le fichier include.ml contient tous les types utilisés.
 
 polish.ml contient le main et toutes les grandes fonctions.
+
+COMPILATION :
+
+Pour compiler notre projet, il suffit d'utiliser les commandes "make" puis "./run -[OPTIONS]"
+
+ORGANISATION :
+
+Nous avons décidé de répartir de la travail de la mnière suivante :
+- Lors du premier rendu, nous nous sommes répartis les fonctions pour que l'un s'occupe de read et l'autre s'occuper de print et eval.
+- Lors du second rendu, nous avons chacun pris une fonction entre vars et simplify pour enfin élaborer une piste ensemble sur la fonction sign.
