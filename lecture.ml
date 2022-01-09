@@ -38,9 +38,9 @@ let est_operateur (st:string) : bool =
 
 
 let not_int (st:string) =
-    try 
+  try 
     (ignore (int_of_string st));false
-    with Failure e -> true
+  with Failure e -> true
  
 
 let parse_expr (ligne:ligne) : (expr) =
@@ -101,28 +101,26 @@ let parse_print (ligne:ligne) =
     Print(parse_expr (List.tl ligne))
   with Failure e -> failwith "Print impossible car l'expression est fausse."
 
-let rec parse_block (res:list_de_lignes) (list:list_de_lignes) (p:int) =
-  match list with 
-  |[] -> (res,list)
-  |(x,y,z)::r -> if y>p then parse_block (res@[(x,y,z)]) r p else (res,list)
-
 let parse_to_program (list:list_de_lignes) : program = 
-  let rec parse_instr (list:list_de_lignes) = 
+  let rec parse_block (res:list_de_lignes) (list:list_de_lignes) (p:int) =
     match list with 
-    | [] -> []
-    |(x,y,z)::r -> match List.hd z with
-      | "READ" -> (x,parse_read z)::parse_instr(r)
-      | "PRINT" -> (x,parse_print z)::parse_instr(r)
-      |"IF" -> let a,b = parse_block [] r y 
-                in 
-                begin
-                match b with 
-                |[] -> (x,If(parse_cond z,parse_instr a,[]))::parse_instr (b)
-                |(i,j,k)::l -> if (List.hd k = "ELSE") then let c,d = parse_block [] l j in 
-                               (x,If(parse_cond z,parse_instr a,parse_instr c))::parse_instr(d)
-                               else (x,If(parse_cond z,parse_instr a,[]))::parse_instr(b)
-                end
-      | "WHILE" -> let a,b = parse_block [] r y in (x,While(parse_cond z,parse_instr a))::parse_instr(b)
-      | _ -> (x,parse_set z)::parse_instr(r)
+    |[] -> (res,list)
+    |(x,y,z)::r -> if y>p then parse_block (res@[(x,y,z)]) r p else (res,list)
+  and parse_instr (list:list_de_lignes) = 
+      match list with 
+      | [] -> []
+      |(x,y,z)::r -> match List.hd z with
+        | "READ" -> (x,parse_read z)::parse_instr(r)
+        | "PRINT" -> (x,parse_print z)::parse_instr(r)
+        | "IF" -> let a,b = parse_block [] r y 
+            in 
+            begin
+              match b with 
+              |[] -> (x,If(parse_cond z,parse_instr a,[]))::parse_instr (b)
+              |(i,j,k)::l -> if (List.hd k = "ELSE") then let c,d = parse_block [] l j in 
+                    (x,If(parse_cond z,parse_instr a,parse_instr c))::parse_instr(d)
+                  else (x,If(parse_cond z,parse_instr a,[]))::parse_instr(b)
+            end
+        | "WHILE" -> let a,b = parse_block [] r y in (x,While(parse_cond z,parse_instr a))::parse_instr(b)
+        | _ -> (x,parse_set z)::parse_instr(r)
   in parse_instr list
-

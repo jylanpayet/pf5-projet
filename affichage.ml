@@ -33,6 +33,6 @@ let print_block (prog:program) : unit =
       | Read(name) -> Printf.printf "%sREAD %s\n" (print_ind ind) name; (aux r ind)
       | Print(expr) -> Printf.printf "%sPRINT %s\n" (print_ind ind) (print_expr expr); (aux r ind)
       | If(cond,block1,block2) -> if (List.length block2) = 0 then ((Printf.printf "%sIF %s\n" (print_ind ind) (print_cond cond)); (aux block1 (ind+1)); (aux r ind))
-            else ((Printf.printf "%sIF %s\n" (print_ind ind) (print_cond cond)); (aux block1 (ind+1)); (Printf.printf "%sELSE\n" (print_ind ind));(aux block2 (ind+1));(aux r ind))
+          else ((Printf.printf "%sIF %s\n" (print_ind ind) (print_cond cond)); (aux block1 (ind+1)); (Printf.printf "%sELSE\n" (print_ind ind));(aux block2 (ind+1));(aux r ind))
       | While(cond,block) ->(Printf.printf "%sWHILE %s\n" (print_ind ind) (print_cond cond)); (aux block (ind+1)); (aux r ind)
   in aux prog 0
