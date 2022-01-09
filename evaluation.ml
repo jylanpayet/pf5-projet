@@ -25,14 +25,14 @@ let eval_cond (c:cond) (env:env) : bool =
 
 let eval_block (prog:program) : unit =
   let a = 
-    let rec aux prog (env:env) : env =
-      match prog with 
-      | [] -> env
-      | (x,y)::r -> match y with 
-        | Set(name,expr) -> if List.mem_assoc name env then (aux r ((name,eval_expr expr env)::env)) else aux r ((name,eval_expr expr env)::env)
-        | Read(name) -> print_string name; print_string "?\n"; let b = read_int() in aux r ((name,b)::env)
-        | Print(expr) -> (Printf.printf "%d\n"(eval_expr expr env));aux r env
-        | If(cond,block1,block2) -> if (eval_cond cond env) then let a = aux block1 env in aux r a  else let b = aux block2 env in aux r b
-        | While(cond,block) -> if eval_cond cond env then let a = aux block env in aux ((x,y)::r) a else aux r env
-    in aux prog [] 
+  let rec aux prog (env:env) : env =
+    match prog with 
+    | [] -> env
+    | (x,y)::r -> match y with 
+      | Set(name,expr) -> (aux r ((name,eval_expr expr env)::env))
+      | Read(name) -> print_string name; print_string "?\n"; let b = read_int() in aux r ((name,b)::env)
+      | Print(expr) -> (Printf.printf "%d\n"(eval_expr expr env));aux r env
+      | If(cond,block1,block2) -> if (eval_cond cond env) then let a = aux block1 env in aux r a  else let b = aux block2 env in aux r b
+      | While(cond,block) -> if eval_cond cond env then let a = aux block env in aux ((x,y)::r) a else aux r env
+  in aux prog [] 
   in ()
